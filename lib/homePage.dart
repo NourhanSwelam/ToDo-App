@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 // import 'package:flutter/src/widgets/container.dart';
@@ -17,7 +19,7 @@ class ToDoScreen extends StatefulWidget {
 
 class _ToDoScreenState extends State<ToDoScreen> {
   int currentindex = 0;
-
+   bool IsbottomSheet = false;
   List<String> titels = [
     'New Tasks',
     'Done Tasks',
@@ -29,6 +31,10 @@ class _ToDoScreenState extends State<ToDoScreen> {
     ArchivedScreen(),
   ];
   var database;
+  var titleController=TextEditingController();
+
+
+  IconData fabIcon = Icons.edit;
   @override
   void initState() {
     // TODO: implement initState
@@ -57,15 +63,95 @@ class _ToDoScreenState extends State<ToDoScreen> {
       appBar: AppBar(title: Text(titels[currentindex])),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          scaffoldKey.currentState?.showBottomSheet(
-            (context) => Container(
-              height: 100,
-              width:double.infinity,
-              color: Colors.amber,
-            ),
+          if(IsbottomSheet){
+            Navigator.pop(context);
+            IsbottomSheet=false;
+            setState(() {
+              fabIcon=Icons.add;
+            });
+          }
+          else{
+              setState(() {
+              fabIcon=Icons.edit;
+            });
+             scaffoldKey.currentState?.showBottomSheet(
+            (context) =>Container(
+              height: 200,
+              width: double.infinity,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                      label: Text('Task Title'),
+                    prefixIcon:Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text('T',style: TextStyle(fontSize: 20,
+                      
+                      ),),
+                    ), ),
+                    
+                    controller: titleController,
+                    keyboardType: TextInputType.text,
+                    validator: ( value){
+                      if(value!=null){
+                        return 'Title must not be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 5,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                      label: Text('Task Title'),
+                    prefixIcon:Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text('T',style: TextStyle(fontSize: 20,
+                      
+                      ),),
+                    ), ),
+                    
+                    controller: titleController,
+                    keyboardType: TextInputType.text,
+                    validator: ( value){
+                      if(value!=null){
+                        return 'Title must not be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 5,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                      label: Text('Task Title'),
+                    prefixIcon:Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text('T',style: TextStyle(fontSize: 20,
+                      
+                      ),),
+                    ), ),
+                    
+                    controller: titleController,
+                    keyboardType: TextInputType.text,
+                    validator: ( value){
+                      if(value!=null){
+                        return 'Title must not be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ), 
+            
+
           );
+          IsbottomSheet=true;}
+         
         },
-        child: Icon(Icons.add),
+        child:Icon(fabIcon),
       ),
       body: Screens[currentindex],
     );
