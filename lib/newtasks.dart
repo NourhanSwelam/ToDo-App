@@ -2,23 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todoapp/cubit/cubit.dart';
+import 'package:todoapp/cubit/states.dart';
 import 'package:todoapp/sharedcompenent.dart';
 
-class TasksScreen extends StatefulWidget {
-  const TasksScreen({super.key});
+class TasksScreen extends StatelessWidget {
+  
 
-  @override
-  State<TasksScreen> createState() => _TasksScreen();
-}
-
-class _TasksScreen extends State<TasksScreen> {
+ 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(itemBuilder: (context,index)=>Buildtaskitem(),
-      
-    separatorBuilder: (context, index )=>Padding(
-      padding: const EdgeInsetsDirectional.only(start: 20),
-      child: Container(width: double.infinity,height: 1, color: Colors.grey,),
-    ), itemCount: 20);
+    return BlocConsumer<AppCubit,AppCubitStates>(
+listener: (BuildContext context,AppCubitStates states ) {},
+builder: (BuildContext context,AppCubitStates states) {
+  var task=AppCubit.git(context).newtasks;
+ 
+
+
+
+return showTasksBuilder(task: task);
+}
+    );
      
-}}
+}
+}
