@@ -25,7 +25,9 @@ import 'package:conditional_builder/conditional_builder.dart';
 
 
 Widget Buildtaskitem(Map model,context){
-  return Dismissible(
+  return 
+Dismissible(
+
     
     key: Key (model['status'].toString()),
     child: Padding(    
@@ -71,12 +73,27 @@ Widget Buildtaskitem(Map model,context){
   
   ),
   onDismissed: (direction){
+    
     AppCubit.git(context).deleteDataBase(id: model['id']);
     
   },
-  );
-
+   background: Container(
+                 color: Colors.red[200],
+                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      Icons.delete,
+                    )
+                  ],
+                ),
+              )
+);           
 }
+             
+ 
+
+
 Widget showTasksBuilder({required List <Map> task}){
   return ConditionalBuilder(
       condition: task.length>0,
